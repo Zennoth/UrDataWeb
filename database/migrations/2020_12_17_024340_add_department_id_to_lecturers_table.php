@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDepartmentToLecturersTable extends Migration
+class AddDepartmentIdToLecturersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddDepartmentToLecturersTable extends Migration
      */
     public function up()
     {
-        Schema::create('lecturers', function (Blueprint $table) {
-            $table->unsignedBigInteger('department_id')->index()->after('photo');
-            $table->foreign('department')->references('id')->on('department');
+        Schema::table('lecturers', function (Blueprint $table) {
+            $table->unsignedBigInteger('department_id')->index()->after('line_account');
+            $table->foreign('department_id')->references('department_id')->on('departments');
         });
     }
 
@@ -27,7 +27,7 @@ class AddDepartmentToLecturersTable extends Migration
     public function down()
     {
         Schema::table('lecturers', function (Blueprint $table) {
-        $table->dropColumn('department_id');
+            $table->dropColumn('department_id');
         });
     }
 }

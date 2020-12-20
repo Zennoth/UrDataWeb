@@ -21,6 +21,9 @@ class CreateLecturersTable extends Migration
             $table->string('lecturer_email');
             $table->text('description');
             $table->text('photo');
+            $table->enum('lecturer_gender', ['0','1'])
+                ->default('0')
+                ->comment('0 = male, 1 = female');
             $table->string('phone');
             $table->string('line_account');
             $table->timestamps();

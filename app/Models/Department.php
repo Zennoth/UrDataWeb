@@ -14,6 +14,6 @@ class Department extends Model
     ];
 
     public function lecturer(){
-        return $this->hasMany(Lecturer::class);
+        return $this->hasMany(Lecturer::class, 'lecturer_id', 'id');
     }
 }
