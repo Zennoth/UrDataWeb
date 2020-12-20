@@ -15,7 +15,7 @@ class AddDepartmentToLecturersTable extends Migration
     {
         Schema::create('lecturers', function (Blueprint $table) {
             $table->unsignedBigInteger('department_id')->index()->after('photo');
-            $table->foreign('department')->references('id')->on('department');
+            $table->foreign('department_id')->references('department_id')->on('departments');
         });
     }
 
