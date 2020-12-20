@@ -51,39 +51,36 @@ class LoginController extends Controller
             'is_login' => '0',
         ];
 
-        $user = [
+        $lecturer = [
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => 2,
             'is_login' => '0',
         ];
 
-        if (Auth::attempt($admin)){
-
+        if(Auth::attempt($admin)){
             $this->isLogin(Auth::id());
-            return redirect()->route('admin.event.index');//event.index
-        } elseif (Auth::attempt($user)){
-
+            return redirect()->route('event.index');
+        } elseif(Auth::attempt($lecturer)){
             $this->isLogin(Auth::id());
-            return redirect()->route('user.event.index');//event.index
-        }
-
+            return redirect()->route('event.index');
+        } 
         return redirect()->route('login');
-
     }
+
     public function logout(Request $request)
     {
         $user = User::findOrFail(Auth::id());
         $user -> update([
             'is_login'=> '0',
+            
         ]);
 
-        Auth::logout();
         $request->session()->invalidate();
-        return redirect()->route('login');
+        return $this->LoggedOut($request) ?: redirect('login');
     }
 
-    private function isLogin(?int $id)
+    public function isLogin(?int $id)
     {
         $user = User::findOrFail($id);
         return $user -> update([
