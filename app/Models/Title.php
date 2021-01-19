@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Title extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = "role_id";
+    protected $primaryKey = "title_id";
 
     protected $fillable = [
-        'role_name',
+        'title_name',
     ];
 
-    public function user(){
-        return $this->hasMany(User::class);
+    public function lecturer(){
+        return $this->hasMany(Lecturer::class);
     }
 }

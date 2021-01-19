@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     use HasFactory;
+
+    protected $primaryKey = "department_id";
+
     protected $fillable = [
         'initial',
         'department_name'
     ];
 
     public function lecturer(){
-        return $this->hasMany(Lecturer::class, 'lecturer_id', 'id');
+        return $this->hasMany(Lecturer::class);
     }
 }
