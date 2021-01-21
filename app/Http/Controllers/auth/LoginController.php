@@ -35,6 +35,57 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $admin = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => 1,
+            'is_login' => '0',
+        ];
+
+        $user = [
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => 2,
+            'is_login' => '0',
+        ];
+
+        if (Auth::attempt($admin)){
+
+            $this->isLogin(Auth::id());
+            return redirect()->route('admin.event.index');//event.index
+        } elseif (Auth::attempt($user)){
+
+            $this->isLogin(Auth::id());
+            return redirect()->route('user.event.index');//event.index
+        }
+
+        return redirect()->route('login');
+
+    }
+    public function logout(Request $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        $user -> update([
+            'is_login'=> '0',
+        ]);
+
+        Auth::logout();
+        $request->session()->invalidate();
+        return redirect()->route('login');
+    }
+
+    private function isLogin(?int $id)
+    {
+        $user = User::findOrFail($id);
+        return $user -> update([
+            'is_login'=> '1',
+
+        ]);
     }
 }
